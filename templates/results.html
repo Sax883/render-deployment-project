@@ -1,0 +1,389 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MOVEXA Tracking Results for MVX-{{ package.tracking_id }}</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap');
+        body { 
+            font-family: 'Inter', sans-serif;
+            background-color: #f0f4f9; 
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+        .main-content {
+             flex-grow: 1;
+        }
+        .card-shadow {
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+        }
+        
+        /* --- Tracking Progress Bar Styles --- */
+        .progress-container {
+            position: relative;
+            display: flex;
+            justify-content: space-between;
+            margin-top: 30px;
+            margin-bottom: 50px;
+            padding: 0 5%; 
+        }
+        .progress-line {
+            position: absolute;
+            height: 4px;
+            width: 90%;
+            background-color: #d1d5db; /* Gray-300 */
+            top: 15px;
+            left: 5%; 
+            z-index: 1;
+        }
+        .progress-line-filled {
+            position: absolute;
+            height: 4px;
+            background-color: #f59e0b; /* Yellow-500 */
+            top: 15px;
+            left: 5%;
+            z-index: 2;
+            width: 0;
+            transition: width 0.5s ease-in-out;
+        }
+        .step {
+            position: relative;
+            text-align: center;
+            flex-grow: 1;
+            z-index: 3;
+        }
+        .step-circle {
+            width: 32px;
+            height: 32px;
+            background-color: #d1d5db; /* Gray-300 */
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 8px auto;
+            color: white;
+            font-weight: bold;
+            transition: background-color 0.3s ease;
+        }
+        .step-label {
+            font-size: 0.8rem;
+            color: #6b7280; /* Gray-500 */
+            transition: color 0.3s ease;
+            font-weight: 500;
+        }
+
+        /* Completed Status */
+        .step.completed .step-circle {
+            background-color: #f59e0b; /* Yellow-500 */
+        }
+        .step.completed .step-label {
+            color: #1f2937; /* Gray-800 */
+        }
+
+        /* Current Active Status */
+        .step.active .step-circle {
+            background-color: #1e40af; /* Blue-700 */
+            transform: scale(1.2);
+            box-shadow: 0 0 0 5px rgba(30, 64, 175, 0.3);
+        }
+        .step.active .step-label {
+            color: #1e40af; /* Blue-700 */
+            font-weight: 700;
+        }
+        /* --- END Tracking Progress Bar Styles --- */
+
+        /* Error Styles */
+        .error-box {
+            border-left: 5px solid #ef4444; /* Red-500 */
+            background-color: #fef2f2; /* Red-50 */
+            padding: 20px;
+            border-radius: 8px;
+            text-align: center;
+        }
+        
+        /* Footer Specific Styles */
+        .footer-link {
+            transition: color 0.2s;
+            display: block;
+            margin-bottom: 8px;
+        }
+        .footer-link:hover {
+            color: #f59e0b; /* Yellow-500 */
+        }
+        .footer-section h4 {
+            font-weight: 700;
+            color: #ffffff;
+            margin-bottom: 16px;
+            font-size: 1.1rem;
+        }
+    </style>
+</head>
+<body class="bg-gray-50">
+
+    <header class="bg-blue-800 shadow-lg">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex justify-between items-center h-16">
+            <a href="http://127.0.0.1:5500/movexa_web_app.html" class="text-3xl font-extrabold text-yellow-400 tracking-wider">MOVEXA</a>
+            <a href="http://127.0.0.1:5500/movexa_web_app.html#tracking" class="text-white hover:text-yellow-400 transition text-sm font-medium">New Tracking</a>
+        </div>
+    </header>
+
+    <div class="main-content max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
+
+        {% if package.status == 'Not Found' %}
+            <div class="bg-white rounded-xl card-shadow p-8 mt-10">
+                <div class="error-box">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-16 w-16 text-red-500 mx-auto mb-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+                    <h1 class="text-3xl font-bold text-red-700 mb-2">Shipment ID Not Recognized</h1>
+                    <p class="text-lg text-gray-700">The tracking ID *+{{ package.tracking_id }}+* could not be found. Please check the format and try again.</p>
+                    <a href="http://127.0.0.1:5500/movexa_web_app.html#tracking" class="mt-4 inline-block bg-blue-600 text-white font-semibold py-2 px-6 rounded-lg hover:bg-blue-700 transition">Return to Tracking</a>
+                </div>
+            </div>
+        {% else %}
+        <h1 class="text-3xl font-extrabold text-blue-800 mb-6 border-b pb-2">Shipment Tracking</h1>
+            <h2 class="text-xl font-bold text-gray-700 mb-6">Tracking ID: <span class="text-yellow-500">{{ package.tracking_id }}</span></h2>
+            
+            <div class="bg-yellow-500 p-4 rounded-xl shadow-md flex justify-between items-center mb-10">
+                <p class="text-lg font-bold text-blue-800">Current Status:</p>
+                <p class="text-2xl font-extrabold text-blue-800">{{ package.status }}</p>
+            </div>
+
+            <div class="bg-white rounded-xl card-shadow p-6 pt-10 mb-10">
+                <div class="progress-container">
+                    <div class="progress-line"></div>
+                    <div id="progress-line-filled" class="progress-line-filled"></div>
+
+                    <div class="step" id="step1">
+                        <div class="step-circle">1</div>
+                        <div class="step-label">Created</div>
+                    </div>
+
+                    <div class="step" id="step2">
+                        <div class="step-circle">2</div>
+                        <div class="step-label">In Transit</div>
+                    </div>
+
+                    <div class="step" id="step3">
+                        <div class="step-circle">3</div>
+                        <div class="step-label">Destination Facility</div>
+                    </div>
+                    
+                    <div class="step" id="step4">
+                        <div class="step-circle">4</div>
+                        <div class="step-label">Out for Delivery</div>
+                    </div>
+                    
+                    <div class="step" id="step5">
+                        <div class="step-circle">✔</div>
+                        <div class="step-label">Delivered</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+                
+                <div class="lg:col-span-1">
+                    <div class="bg-white rounded-xl card-shadow p-6 mb-6">
+                        <h3 class="text-xl font-bold text-blue-800 mb-4 border-b pb-2">Shipment Details</h3>
+                        <ul class="space-y-3 text-gray-700 text-sm">
+                            <li class="flex justify-between">
+                                <span class="font-semibold">Recipient:</span>
+                                <span>{{ package.recipient }}</span>
+                            </li>
+                            
+                            <li class="flex justify-between">
+                                <span class="font-semibold">Item Type:</span>
+                                <span>{{ package.shipment_type or 'N/A' }}</span>
+                            </li>
+                            <li class="flex justify-between">
+                                <span class="font-semibold">Weight:</span>
+                                <span>{% if package.weight %}{{ package.weight }} kg{% else %}N/A{% endif %}</span>
+                            </li>
+                            <li class="flex justify-between">
+                                <span class="font-semibold">Dimensions:</span>
+                                <span>{{ package.dimensions or 'N/A' }}</span>
+                            </li>
+                            <li class="flex justify-between">
+                                <span class="font-semibold">Shipment Type:</span>
+                                <span>MOVEXA Global Express</span>
+                            </li>
+                            <li class="flex justify-between">
+                                <span class="font-semibold">Service Area:</span>
+                                <span>International Priority (IP)</span>
+                            </li>
+                            <li class="flex justify-between">
+                                <span class="font-semibold">Original Shipment Date:</span>
+                                <span>{{ package.created_at.split(' ')[0] }}</span>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="lg:col-span-2">
+                    <div class="bg-white rounded-xl card-shadow p-6">
+                        <h3 class="text-xl font-bold text-blue-800 mb-4 border-b pb-2">Tracking History</h3>
+                        
+                        <div class="mb-6 rounded-lg overflow-hidden border">
+                            {% if history %}
+                            <iframe 
+                                src="https://maps.google.com/maps?q={{ history[0].location|urlencode() }}&output=embed" 
+                                width="100%" height="300" style="border:0;" allowfullscreen="" loading="lazy"></iframe>
+                            {% else %}
+                            <div class="h-64 flex items-center justify-center text-gray-500">
+                                Map not available yet (No location data logged).
+                            </div>
+                            {% endif %}
+                        </div>
+
+                        <ol class="relative border-l border-gray-200">                  
+                            {% for event in history %}
+                            <li class="mb-4 ml-6">
+                                <span class="absolute flex items-center justify-center w-3 h-3 bg-blue-500 rounded-full -left-1.5 ring-4 ring-white"></span>
+                                <h3 class="flex items-center mb-1 text-base font-semibold text-gray-900">{{ event.status_update }}</h3>
+                                <time class="block mb-2 text-xs font-normal leading-none text-gray-400">{{ event.timestamp.split('.')[0] }}</time>
+                                <p class="text-sm font-normal text-gray-500">{{ event.location }}</p>
+                            </li>
+                            {% endfor %}
+                        </ol>
+                    </div>
+                </div>
+
+            </div>
+
+        {% endif %}
+
+    </div>
+
+    <footer class="bg-blue-900 text-gray-300 pt-10 pb-6 mt-12">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 grid grid-cols-2 md:grid-cols-4 gap-8 border-b border-blue-800 pb-10">
+
+            <div class="footer-section">
+                <h4>Quick Links</h4>
+                <a href="#" class="footer-link">Customer Service</a>
+                <a href="#" class="footer-link">Customer Portal Logins</a>
+                <a href="#" class="footer-link">Developer Portal ↗</a>
+                <a href="#" class="footer-link">Get a Quote</a>
+                <a href="#" class="footer-link">MOVEXA for Business</a>
+            </div>
+
+            <div class="footer-section">
+                <h4>Our Divisions</h4>
+                <a href="#" class="footer-link">MOVEXA Express</a>
+                <a href="#" class="footer-link">MOVEXA Global Forwarding</a>
+                <a href="#" class="footer-link">Other Global Divisions</a>
+            </div>
+
+            <div class="footer-section">
+                <h4>Company Information</h4>
+                <a href="#" class="footer-link">About MOVEXA</a>
+                <a href="#" class="footer-link">Delivered ↗</a>
+                <a href="#" class="footer-link">Careers ↗</a>
+                <a href="#" class="footer-link">Press Center</a>
+                <a href="#" class="footer-link">Investors ↗</a>
+                <a href="#" class="footer-link">Sustainability</a>
+                <a href="#" class="footer-link">Brand Partnerships</a>
+            </div>
+
+            <div class="footer-section">
+                <div class="text-3xl font-extrabold text-yellow-400 mb-6">MOVEXA Group</div>
+                <a href="#" class="footer-link text-sm">Fraud Awareness</a>
+                <a href="#" class="footer-link text-sm">Legal Notice</a>
+                <a href="#" class="footer-link text-sm">Terms of Use</a>
+                <a href="#" class="footer-link text-sm">Privacy Notice</a>
+                <a href="#" class="footer-link text-sm">Additional Information</a>
+            </div>
+
+        </div>
+        
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-4 text-center text-sm text-gray-500">
+            © 2025 MOVEXA Global Logistics. All Rights Reserved.
+        </div>
+        
+        <button class="fixed bottom-4 right-4 bg-red-600 text-white p-3 rounded-full shadow-lg hover:bg-red-700 transition" 
+                onclick="window.scrollTo({top: 0, behavior: 'smooth'})">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 10l7-7m0 0l7 7m-7-7v18" />
+            </svg>
+        </button>
+    </footer>
+
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            
+            // Get the current status text provided by Flask
+            const currentStatus = "{{ package.status }}"; 
+
+            // Define the sequence of statuses and their corresponding step element ID
+            const statusSequence = [
+                { name: "Shipment Created", id: "step1" },
+                { name: "Shipment in Transit", id: "step2" },
+                { name: "Inbound Processing Complete", id: "step3" },
+                { name: "Out for Delivery", id: "step4" },
+                { name: "Delivery Attempted", id: "step4" },
+                { name: "Delivered", id: "step5" }
+            ];
+
+            let activeStepIndex = -1;
+            let currentStepFound = false;
+
+            for (let i = 0; i < statusSequence.length; i++) {
+                if (statusSequence[i].name === currentStatus) {
+                    activeStepIndex = i;
+                    currentStepFound = true;
+                    if (statusSequence[i].id === 'step5') {
+                         break;
+                    }
+                }
+            }
+
+            if (currentStepFound) {
+                let lastCompletedVisualStep = '';
+                
+                for (let i = 0; i < statusSequence.length; i++) {
+                    const stepId = statusSequence[i].id;
+                    const stepElement = document.getElementById(stepId);
+
+                    if (!stepElement) continue;
+
+                    if (i <= activeStepIndex) {
+                        if (stepId !== lastCompletedVisualStep) {
+                            stepElement.classList.add('completed');
+                        }
+                    }
+
+                    if (statusSequence[i].name === currentStatus) {
+                        const currentActive = document.querySelector('.step.active');
+                        if (currentActive) {
+                            currentActive.classList.remove('active');
+                        }
+                        stepElement.classList.add('active');
+                    }
+                    
+                    lastCompletedVisualStep = stepId; 
+                }
+            }
+            
+            // 3. Update the progress bar fill width (Line)
+            const filledLine = document.getElementById('progress-line-filled');
+            if (filledLine) {
+                const totalSteps = 5; 
+                let visualStep = 0;
+                const currentVisualStatus = currentStatus;
+
+                if (currentVisualStatus === "Shipment Created") visualStep = 1;
+                else if (currentVisualStatus === "Shipment in Transit") visualStep = 2;
+                else if (currentVisualStatus === "Inbound Processing Complete") visualStep = 3;
+                else if (currentVisualStatus === "Out for Delivery" || currentVisualStatus === "Delivery Attempted") visualStep = 4;
+                else if (currentVisualStatus === "Delivered") visualStep = 5;
+                
+                const progressWidth = Math.min(100, ((visualStep - 1) / (totalSteps - 1)) * 100);
+                
+                filledLine.style.width = progressWidth + '%';
+            }
+        });
+    </script>
+</body>
+</html>

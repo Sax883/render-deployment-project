@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MOVEXA | Business Shipping Solutions</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap');
+        body { 
+            font-family: 'Inter', sans-serif;
+            background-color: #f0f4f9; 
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+        .container { 
+            max-width: 1000px; 
+            margin: 0 auto; 
+            flex-grow: 1;
+        }
+        .hero-bg {
+            /* Using a placeholder image for a professional warehouse/logistics look */
+            background-image: linear-gradient(to right, rgba(30, 58, 138, 0.95), rgba(30, 58, 138, 0.7)), url('https://source.unsplash.com/random/1000x500/?warehouse,logistics');
+            background-size: cover;
+            background-position: center;
+        }
+    </style>
+</head>
+<body class="bg-gray-50">
+
+    <header class="bg-blue-800 shadow-xl">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex justify-between items-center h-16">
+            <a href="http://127.0.0.1:5500/movexa_web_app.html" class="text-3xl font-extrabold text-yellow-400 tracking-wider">MOVEXA</a>
+            <a href="http://127.0.0.1:5500/movexa_web_app.html" class="text-white hover:text-yellow-400 transition text-sm font-medium">Back to Home</a>
+        </div>
+    </header>
+
+    <section class="hero-bg text-white py-20 mb-12">
+        <div class="container px-4 sm:px-6 lg:px-8">
+            <h1 class="text-5xl font-extrabold mb-4">MOVEXA for Business</h1>
+            <p class="text-xl mb-6 max-w-2xl">Tailored shipping and supply chain solutions designed for companies that ship frequently, large volumes, or require integrated logistics.</p>
+            <a href="#contact-form" class="inline-block bg-yellow-500 text-blue-800 font-bold py-3 px-8 rounded-lg hover:bg-yellow-400 transition shadow-xl text-lg transform hover:scale-[1.05]">
+                Request a Business Account
+            </a>
+        </div>
+    </section>
+
+    <div class="container px-4 sm:px-6 lg:px-8 pb-12">
+        
+        <section class="mb-12">
+            <h2 class="text-3xl font-bold text-blue-800 mb-6 border-b pb-2">Why Partner with MOVEXA?</h2>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                
+                <div class="bg-white p-6 rounded-lg shadow-md border-t-4 border-yellow-500">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="#f59e0b" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="mb-3 lucide lucide-rocket"><path d="M4.5 16.5V17a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2v-5"/><path d="M12 10l-2 2 2 2"/><path d="m15 15-2-2-2-2"/><path d="M18 6l-6 6"/><path d="m9 15 3-3-3-3"/><path d="m15 15-3-3 3-3"/></svg>
+                    <h3 class="text-xl font-semibold text-gray-800 mb-2">Exclusive Rates</h3>
+                    <p class="text-gray-600">Access volume-based pricing, deferred payment options, and discounted rates for frequent shippers.</p>
+                </div>
+                
+                <div class="bg-white p-6 rounded-lg shadow-md border-t-4 border-yellow-500">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="#f59e0b" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="mb-3 lucide lucide-route"><path d="M17 14h.01"/><path d="M17 21v-7"/><path d="M17 5V3"/><path d="M12 5h.01"/><path d="M12 21v-3"/><path d="M12 11V5"/><path d="M7 14h.01"/><path d="M7 21v-7"/><path d="M7 8v6"/><path d="M17 19h-10"/></svg>
+                    <h3 class="text-xl font-semibold text-gray-800 mb-2">Integrated Technology</h3>
+                    <p class="text-gray-600">API integration for e-commerce platforms, batch shipping tools, and dedicated client dashboards.</p>
+                </div>
+                
+                <div class="bg-white p-6 rounded-lg shadow-md border-t-4 border-yellow-500">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="#f59e0b" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="mb-3 lucide lucide-headset"><path d="M4 14v4a2 2 0 0 0 2 2h4a2 2 0 0 0 2-2v-4a2 2 0 0 0-2-2H6a2 2 0 0 0-2 2z"/><path d="M18 14v4a2 2 0 0 0 2 2h4a2 2 0 0 0 2-2v-4a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2z"/><path d="M12 12V3"/><path d="M12 12c-3.3 0-6-2.7-6-6h-2c0 4.4 3.6 8 8 8s8-3.6 8-8h-2c0 3.3-2.7 6-6 6z"/></svg>
+                    <h3 class="text-xl font-semibold text-gray-800 mb-2">Dedicated Support</h3>
+                    <p class="text-gray-600">Your business gets a dedicated account manager to streamline operations and resolve issues quickly.</p>
+                </div>
+            </div>
+        </section>
+
+        <section id="contact-form" class="mb-12 bg-white p-8 rounded-xl shadow-lg border border-gray-200">
+            <h2 class="text-3xl font-bold text-blue-800 mb-4">Tell Us About Your Business</h2>
+            <p class="text-gray-600 mb-6">Complete the form below and a MOVEXA specialist will contact you within 24 hours.</p>
+
+            <form action="#" method="POST" class="space-y-4">
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <input type="text" placeholder="Your Full Name" required class="w-full p-3 border border-gray-300 rounded-lg focus:ring-yellow-500 focus:border-yellow-500">
+                    <input type="email" placeholder="Business Email Address" required class="w-full p-3 border border-gray-300 rounded-lg focus:ring-yellow-500 focus:border-yellow-500">
+                    <input type="text" placeholder="Company Name" required class="w-full p-3 border border-gray-300 rounded-lg focus:ring-yellow-500 focus:border-yellow-500">
+                    <input type="tel" placeholder="Phone Number" required class="w-full p-3 border border-gray-300 rounded-lg focus:ring-yellow-500 focus:border-yellow-500">
+                </div>
+                <select required class="w-full p-3 border border-gray-300 rounded-lg focus:ring-yellow-500 focus:border-yellow-500">
+                    <option value="" disabled selected>Select Your Monthly Shipping Volume</option>
+                    <option value="low">1 - 50 Shipments</option>
+                    <option value="medium">51 - 500 Shipments</option>
+                    <option value="high">500+ Shipments</option>
+                </select>
+                <textarea placeholder="Describe your logistics needs..." rows="4" required class="w-full p-3 border border-gray-300 rounded-lg focus:ring-yellow-500 focus:border-yellow-500"></textarea>
+                
+                <button type="submit" class="w-full bg-blue-800 text-white font-bold py-3 rounded-lg hover:bg-blue-700 transition shadow-lg text-lg transform hover:scale-[1.005]">
+                    Submit Request
+                </button>
+                <p class="text-xs text-gray-500 text-center">Your data is safe. We will only use it to contact you regarding business solutions.</p>
+            </form>
+        </section>
+
+    </div>
+
+    <footer class="bg-blue-900 text-white p-6 text-center text-sm mt-auto">
+        © 2025 MOVEXA Global Logistics. All Rights Reserved.
+    </footer>
+
+</body>
+</html>

@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin: New Package</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap');
+        body { font-family: 'Inter', sans-serif; background-color: #f3f4f6; }
+    </style>
+</head>
+<body class="min-h-screen flex flex-col">
+    <header class="bg-blue-800 shadow-lg">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex justify-between items-center h-16">
+            <h1 class="text-3xl font-extrabold text-yellow-400 tracking-wider">MOVEXA Admin</h1>
+            <a href="{{ url_for('admin_home') }}" class="text-white hover:text-yellow-400 transition text-sm font-medium">Admin Home</a>
+        </div>
+    </header>
+
+    <main class="flex-grow max-w-lg mx-auto w-full px-4 py-12">
+        <div class="bg-white p-8 rounded-xl shadow-2xl">
+            <h2 class="text-2xl font-bold text-blue-800 mb-6 border-b pb-2">Register New Shipment</h2>
+
+            {% if error %}
+            <div class="bg-red-100 border-l-4 border-red-500 text-red-700 p-4 mb-4" role="alert">
+                <p>{{ error }}</p>
+            </div>
+            {% endif %}
+
+            <form action="{{ url_for('admin_new') }}" method="POST" class="space-y-4">
+                
+                <div>
+                    <label for="tracking_id" class="block text-sm font-medium text-gray-700 mb-1">Tracking ID</label>
+                    <input type="text" id="tracking_id" name="tracking_id" required value="{{ placeholder_id }}"
+                           class="w-full p-3 border border-gray-300 rounded-lg bg-gray-50 font-mono text-lg focus:ring-yellow-500 focus:border-yellow-500">
+                </div>
+
+                <div>
+                    <label for="recipient" class="block text-sm font-medium text-gray-700 mb-1">Recipient Name/Company</label>
+                    <input type="text" id="recipient" name="recipient" required placeholder="e.g., John Doe"
+                           class="w-full p-3 border border-gray-300 rounded-lg focus:ring-yellow-500 focus:border-yellow-500">
+                </div>
+
+                <div>
+                    <label for="weight" class="block text-sm font-medium text-gray-700 mb-1">Weight (kg)</label>
+                    <input type="text" id="weight" name="weight" placeholder="e.g., 5.2"
+                           class="w-full p-3 border border-gray-300 rounded-lg focus:ring-yellow-500 focus:border-yellow-500">
+                </div>
+
+                <div>
+                    <label for="dimensions" class="block text-sm font-medium text-gray-700 mb-1">Dimensions (L x W x H)</label>
+                    <input type="text" id="dimensions" name="dimensions" placeholder="e.g., 40cm x 30cm x 20cm"
+                           class="w-full p-3 border border-gray-300 rounded-lg focus:ring-yellow-500 focus:border-yellow-500">
+                </div>
+
+                <div>
+                    <label for="shipment_type" class="block text-sm font-medium text-gray-700 mb-1">Shipment Type</label>
+                    <select id="shipment_type" name="shipment_type" 
+                            class="w-full p-3 border border-gray-300 rounded-lg focus:ring-yellow-500 focus:border-yellow-500">
+                        <option value="Document">Document</option>
+                        <option value="Small Parcel">Small Parcel</option>
+                        <option value="Freight">Freight</option>
+                    </select>
+                </div>
+                
+                <button type="submit" 
+                        class="w-full bg-blue-600 text-white font-semibold py-3 px-4 rounded-lg hover:bg-blue-700 transition duration-150 ease-in-out text-lg shadow-md">
+                    Register Package & Proceed to Update
+                </button>
+            </form>
+        </div>
+    </main>
+    
+    <footer class="bg-gray-200 text-gray-600 p-4 text-center text-sm mt-auto">
+        &copy; 2025 MOVEXA Admin Panel.
+    </footer>
+</body>
+</html>

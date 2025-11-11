@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>MOVEXA Shipment Tracking</title>
+</head>
+<body>
+    <h1>MOVEXA Shipment Tracking</h1>
+    <form method="POST" action="/track">
+        <label for="tracking_id">Enter MOVEXA Tracking ID (e.g., MVX-ABC12345):</label><br>
+        <input type="text" id="tracking_id" name="tracking_id" required><br><br>
+        <button type="submit">Track Package</button>
+    </form>
+    <p>Admin function: <a href="http://127.0.0.1:5000/admin/new">Create New Shipment</a></p>
+</body>
+</html>

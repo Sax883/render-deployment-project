@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MOVEXA | Admin Dashboard</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap');
+        body { 
+            font-family: 'Inter', sans-serif;
+            background-color: #f0f4f9; 
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+        .container { 
+            max-width: 900px; 
+            margin: 0 auto; 
+            flex-grow: 1;
+        }
+        .card-shadow {
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+        }
+    </style>
+</head>
+<body class="bg-gray-50">
+
+    <header class="bg-blue-800 shadow-xl">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex justify-between items-center h-16">
+            <a href="/admin" class="text-3xl font-extrabold text-yellow-400 tracking-wider">MOVEXA Admin</a>
+            <a href="http://127.0.0.1:5500/movexa_web_app.html" class="text-white hover:text-yellow-400 transition text-sm font-medium">Customer Site</a>
+        </div>
+    </header>
+
+    <div class="container px-4 sm:px-6 lg:px-8 py-12">
+        
+        <div class="bg-white rounded-xl card-shadow p-6 sm:p-10">
+            <h1 class="text-3xl sm:text-4xl font-extrabold text-blue-800 mb-6 border-b pb-4">Shipment Management Center</h1>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                
+                <a href="{{ url_for('admin_new') }}" class="block p-6 bg-green-50 rounded-xl border-l-4 border-green-500 hover:bg-green-100 transition shadow-md">
+                    <h2 class="text-xl font-bold text-green-700 mb-2">Create New Shipment</h2>
+                    <p class="text-gray-700">Start the process for a new order. Generates a unique Tracking ID.</p>
+                </a>
+                
+                <a href="#update_section" class="block p-6 bg-blue-50 rounded-xl border-l-4 border-blue-500 hover:bg-blue-100 transition shadow-md">
+                    <h2 class="text-xl font-bold text-blue-700 mb-2">Update Existing Status</h2>
+                    <p class="text-gray-700">Quickly add a new scan, location, or status update.</p>
+                </a>
+            </div>
+
+            <h2 id="update_section" class="text-2xl font-bold text-blue-800 mt-10 mb-4 border-b pb-2">Find Shipment to Update</h2>
+            
+            <form method="GET" action="{{ url_for('admin_update_status', tracking_id='tracking_id_placeholder') }}" class="space-y-4" onsubmit="return handleUpdateForm(event)">
+                <label for="tracking_id_lookup" class="block text-sm font-medium text-gray-700">Enter Existing Tracking ID</label>
+                <input type="text" id="tracking_id_lookup" name="tracking_id_lookup" required placeholder="e.g., MVX-19679473"
+                       class="w-full p-3 border border-gray-300 rounded-lg focus:ring-yellow-500 focus:border-yellow-500 uppercase">
+                
+                <button type="submit" 
+                        class="w-full bg-blue-800 text-white font-bold py-3 rounded-lg hover:bg-blue-700 transition shadow-lg text-lg transform hover:scale-[1.005]">
+                    Go to Update Page
+                </button>
+            </form>
+            
+            <p class="text-xs text-gray-500 mt-4 text-center">Use a test ID like MVX-DEMO2025 (if you ran database_setup.py)</p>
+        </div>
+
+    </div>
+
+    <footer class="bg-blue-900 text-white p-6 text-center text-sm mt-auto">
+        © 2025 MOVEXA Global Logistics Admin
+    </footer>
+
+    <script>
+        function handleUpdateForm(event) {
+            event.preventDefault(); // Stop the default form submission
+            
+            const trackingId = document.getElementById('tracking_id_lookup').value.toUpperCase();
+            
+            // Generate the correct URL dynamically
+            const baseUrl = "{{ url_for('admin_update_status', tracking_id='tracking_id_placeholder') }}";
+            const finalUrl = baseUrl.replace('tracking_id_placeholder', trackingId);
+            
+            window.location.href = finalUrl;
+            return false; // Prevent final submission
+        }
+    </script>
+</body>
+</html>

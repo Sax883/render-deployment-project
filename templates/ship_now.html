@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MOVEXA | Book Your Shipment</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap');
+        body { 
+            font-family: 'Inter', sans-serif;
+            background-color: #f0f4f9; 
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+        .container { 
+            max-width: 900px; 
+            margin: 0 auto; 
+            flex-grow: 1;
+        }
+        .card-shadow {
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+        }
+    </style>
+</head>
+<body class="bg-gray-50">
+
+    <header class="bg-blue-800 shadow-xl">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex justify-between items-center h-16">
+            <a href="http://127.0.0.1:5500/movexa_web_app.html" class="text-3xl font-extrabold text-yellow-400 tracking-wider">MOVEXA</a>
+            <a href="http://127.0.0.1:5500/movexa_web_app.html" class="text-white hover:text-yellow-400 transition text-sm font-medium">Back to Home</a>
+        </div>
+    </header>
+
+    <div class="container px-4 sm:px-6 lg:px-8 py-12">
+        
+        <div class="bg-white rounded-xl card-shadow p-6 sm:p-10 text-center">
+            
+            <svg xmlns="http://www.w3.org/2000/svg" width="60" height="60" viewBox="0 0 24 24" fill="none" stroke="#f59e0b" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="mx-auto mb-6 lucide lucide-truck"><path d="M5 17H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2h-1"/><path d="M10 10l3 3h2"/><path d="M22 17h-2"/><path d="M7 17a2 2 0 1 0 0 4 2 2 0 0 0 0-4Z"/><path d="M16 17a2 2 0 1 0 0 4 2 2 0 0 0 0-4Z"/></svg>
+            
+            <h1 class="text-3xl sm:text-4xl font-extrabold text-blue-800 mb-4">Book Your MOVEXA Shipment</h1>
+            <p class="text-xl text-gray-600 mb-8">Ready to ship? Our online booking system is launching soon to simplify the process.</p>
+            
+            <div class="p-6 bg-blue-50 rounded-lg border border-blue-200">
+                <p class="font-semibold text-gray-800 mb-4">For immediate shipping needs, please contact our sales team directly:</p>
+                <a href="mailto:sales@movexa.com" class="inline-block bg-yellow-500 text-blue-800 font-bold py-3 px-8 rounded-lg hover:bg-yellow-400 transition shadow-lg text-lg">
+                    Contact Sales & Booking
+                </a>
+            </div>
+            
+            <p class="text-sm text-gray-500 mt-6">Expected service availability: Q1 2026</p>
+        </div>
+
+    </div>
+
+    <footer class="bg-blue-900 text-white p-6 text-center text-sm mt-auto">
+        © 2025 MOVEXA Global Logistics. All Rights Reserved.
+    </footer>
+
+</body>
+</html>

@@ -1,0 +1,7 @@
+Database and temporary files
+tracking.db
+*.pyc
+pycache/
+Dependencies (Installed separately on Render)
+venv/
+/env/
