@@ -23,6 +23,12 @@ except ImportError:
 
 app = Flask(__name__)
 CORS(app) 
+# --- START OF CODE TO ADD ---
+@app.route('/')
+def index():
+    # Renders the main HTML file.
+    return render_template('movesa_web_app.html')
+# --- END OF CODE TO ADD ---
 
 # --- SECURITY CONFIGURATION (Basic Authentication) ---
 # NOTE: Render will use environment variables for security. 
