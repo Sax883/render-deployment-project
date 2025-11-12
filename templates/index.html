@@ -2,14 +2,121 @@
 <html>
 <head>
     <title>MOVEXA Shipment Tracking</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap');
+        body { 
+            font-family: 'Inter', sans-serif;
+            background-color: #f0f4f9; 
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+        .main-content {
+             flex-grow: 1;
+        }
+        .card-shadow {
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+        }
+        
+        /* --- Tracking Progress Bar Styles --- */
+        .progress-container {
+            position: relative;
+            display: flex;
+            justify-content: space-between;
+            margin-top: 30px;
+            margin-bottom: 50px;
+            padding: 0 5%; 
+        }
+        .progress-line {
+            position: absolute;
+            height: 4px;
+            width: 90%;
+            background-color: #d1d5db; /* Gray-300 */
+            top: 15px;
+            left: 5%; 
+            z-index: 1;
+        }
+        .progress-line-filled {
+            position: absolute;
+            height: 4px;
+            background-color: #f59e0b; /* Yellow-500 */
+            top: 15px;
+            left: 5%;
+            z-index: 2;
+            width: 0;
+            transition: width 0.5s ease-in-out;
+        }
+        .step {
+            position: relative;
+            text-align: center;
+            flex-grow: 1;
+            z-index: 3;
+        }
+        .step-circle {
+            width: 32px;
+            height: 32px;
+            background-color: #d1d5db; /* Gray-300 */
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 8px auto;
+            color: white;
+            font-weight: bold;
+            transition: background-color 0.3s ease;
+        }
+        .step-label {
+            font-size: 0.8rem;
+            color: #6b7280; /* Gray-500 */
+            transition: color 0.3s ease;
+            font-weight: 500;
+        }
+
+        /* Completed Status */
+        .step.completed .step-circle {
+            background-color: #f59e0b; /* Yellow-500 */
+        }
+        .step.completed .step-label {
+            color: #1f2937; /* Gray-800 */
+        }
+
+        /* Current Active Status */
+        .step.active .step-circle {
+            background-color: #1e40af; /* Blue-700 */
+            transform: scale(1.2);
+            box-shadow: 0 0 0 5px rgba(30, 64, 175, 0.3);
+        }
+        .step.active .step-label {
+            color: #1e40af; /* Blue-700 */
+            font-weight: 700;
+        }
+        /* --- END Tracking Progress Bar Styles --- */
+
+        /* Error Styles */
+        .error-box {
+            border-left: 5px solid #ef4444; /* Red-500 */
+            background-color: #fef2f2; /* Red-50 */
+            padding: 20px;
+            border-radius: 8px;
+            text-align: center;
+        }
+        
+        /* Footer Specific Styles */
+        .footer-link {
+            transition: color 0.2s;
+            display: block;
+            margin-bottom: 8px;
+        }
+        .footer-link:hover {
+            color: #f59e0b; /* Yellow-500 */
+        }
+        .footer-section h4 {
+            font-weight: 700;
+            color: #ffffff;
+            margin-bottom: 16px;
+            font-size: 1.1rem;
+        }
+    </style>
 </head>
-<body>
-    <h1>MOVEXA Shipment Tracking</h1>
-    <form method="POST" action="/track">
-        <label for="tracking_id">Enter MOVEXA Tracking ID (e.g., MVX-ABC12345):</label><br>
-        <input type="text" id="tracking_id" name="tracking_id" required><br><br>
-        <button type="submit">Track Package</button>
-    </form>
-    <p>Admin function: <a href="http://127.0.0.1:5000/admin/new">Create New Shipment</a></p>
 </body>
 </html>
