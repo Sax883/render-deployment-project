@@ -27,7 +27,7 @@ CORS(app)
 @app.route('/')
 def index():
     # Renders the main HTML file.
-    return render_template('movesa_web_app.html')
+    return render_template('index.html')
 # --- END OF CODE TO ADD ---
 
 # --- SECURITY CONFIGURATION (Basic Authentication) ---
