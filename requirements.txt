@@ -1,3 +1,9 @@
+Current dependencies:
+(Add any other dependencies your project needs here)
 Flask
-psycopg2-binary
 gunicorn
+psycopg2-binary
+sqlite3
+CORS
+Add the missing module:
+flask-cors
