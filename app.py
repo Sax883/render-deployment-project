@@ -10,6 +10,7 @@ from functools import wraps
 # Note: psycopg2 is the PostgreSQL driver required for Render
 try:
     import psycopg2
+    import psycopg2.extras
     # Determine the database connection string from environment variables (used by Render)
     DATABASE_URL = os.environ.get("DATABASE_URL", "postgresql://user:password@localhost:5432/movexadb")
     USE_POSTGRES = True
@@ -19,45 +20,59 @@ except ImportError:
     DATABASE_FILE = 'tracking.db'
     USE_POSTGRES = False
 # --- END RENDER/POSTGRESQL SPECIFIC IMPORTS ---
+
 app = Flask(__name__)
 CORS(app) 
-@app. route ('/')
+
+# --- PUBLIC ROUTING FIXES START HERE ---
+
+@app.route('/')
 def index():
+    # FIX: Indentation corrected for function body
     return render_template('index.html')
-@app. route('/track', methods= ['POST'])
-def track_shipment () :
-# This route handles the submission of
-the tracking ID from the homepage form. from flask import request
-# 1. Get the tracking ID from the
-submitted form data tracking_id =
-request. form.get ( 'tracking_id')
-# 2. For now, return dummy data to
-ensure the page loads:
- return render_template('results.html',
-                       tracking_id=tracking_id,
-                       status="In progress",  # <-- String must be closed
-                       location="New York, USA")
-Capp. route('/ship-now')
-def ship_now() :
-return
-render_ template ('ship_now.html')
-Capp. route ('/get-quote')
-def get quote() :
-return render_template ( 'quote.html' )
-@app. route ('/business')
-def business_page ():
-return
-render_template ( 'business.html ')
-@app. route('/contact')
-def contact page ():
-return render_template ( 'contact.html')
-@app. route ('/about')
-def about_page() :
-return render_template ( 'about.html')
-@app. route ('/client-portal') 
-def client_portal_page ():
-return
-render_template ('client_portal.html')
+
+@app.route('/track', methods=['POST']) 
+# FIX: Combined broken route syntax from two lines into one, making it valid.
+def track_shipment():
+    # FIX: Indentation corrected for entire function body
+
+    # This route handles the submission of the tracking ID from the homepage form.
+    # 1. Get the tracking ID from the submitted form data
+    submitted_form_data_tracking_id = request.form.get('tracking_id')
+
+    # 2. For now, return dummy data to ensure the page loads:
+    return render_template('results.html',
+                           tracking_id=submitted_form_data_tracking_id, # FIX: Used corrected local variable name
+                           status="In progress",                       # FIX: String literal is correctly closed
+                           location="New York, USA")
+
+@app.route('/ship-now')
+def ship_now():
+    return render_template('ship_now.html')
+
+@app.route('/get-quote')
+def get_quote():
+    return render_template('quote.html')
+
+@app.route('/business')
+def business_page():
+    return render_template('business.html')
+
+@app.route('/contact')
+def contact_page():
+    return render_template('contact.html')
+
+@app.route('/about')
+def about_page():
+    return render_template('about.html')
+
+@app.route('/client-portal') 
+def client_portal_page():
+    return render_template('client_portal.html')
+
+# --- PUBLIC ROUTING FIXES END HERE ---
+
+
 # --- SECURITY CONFIGURATION (Basic Authentication) ---
 # NOTE: Render will use environment variables for security. 
 ADMIN_USERNAME = os.environ.get('ADMIN_USERNAME', 'movexa_admin')
@@ -91,6 +106,7 @@ def requires_auth(f):
 
 def get_db_connection():
     """Establishes a connection based on the runtime environment (PostgreSQL for Render, SQLite for local)."""
+    conn = None
     if USE_POSTGRES:
         # Use psycopg2 for PostgreSQL
         conn = psycopg2.connect(DATABASE_URL)
@@ -100,20 +116,21 @@ def get_db_connection():
     
     # Set row factory for dictionary-like access
     if USE_POSTGRES:
+        # Use RealDictCursor for psycopg2 to get dictionary-like rows
         cursor = conn.cursor(cursor_factory=psycopg2.extras.RealDictCursor)
-        conn.row_factory = None # psycopg2.extras.RealDictCursor handles this
+        return conn, cursor
     else:
+        # Use row_factory for sqlite3 to get dictionary-like rows
         conn.row_factory = sqlite3.Row
-    
-    return conn
+        return conn, conn.cursor()
 
 def execute_query(query, params=None, fetch_one=False, fetch_all=False, commit=False):
     """Generic function to handle database operations for both DB types."""
     conn = None
+    cursor = None
     result = None
     try:
-        conn = get_db_connection()
-        cursor = conn.cursor()
+        conn, cursor = get_db_connection()
         
         if params is None:
             params = []
@@ -141,6 +158,8 @@ def execute_query(query, params=None, fetch_one=False, fetch_all=False, commit=F
              conn.rollback()
         raise e
     finally:
+        if cursor:
+            cursor.close()
         if conn:
             conn.close()
     return result
@@ -198,8 +217,6 @@ def generate_tracking_id():
 
 # --- Shipping Quote Calculation Logic (API) ---
 
-# (Quote logic remains the same, using simple Python math)
-
 def calculate_quote(origin, destination, weight):
     if weight is None or weight <= 0:
         raise ValueError("Weight must be a valid number greater than zero.")
@@ -241,7 +258,6 @@ def api_quote():
 
 # --- MOVEXA Customer-Facing Routes (No Auth Required) ---
 
-
 @app.route('/results/<tracking_id>')
 def results(tracking_id):
     package = db_get_package_details(tracking_id)
@@ -250,19 +266,13 @@ def results(tracking_id):
     # Sorting logic for history
     if history:
         try:
-            history.sort(key=lambda x: datetime.strptime(x['timestamp'].split('.')[0], '%Y-%m-%d %H:%M:%S'), reverse=True)
+            # Handle potential datetime format variations from DB
+            history.sort(key=lambda x: datetime.strptime(str(x['timestamp']).split('.')[0], '%Y-%m-%d %H:%M:%S'), reverse=True)
         except ValueError:
-            history.sort(key=lambda x: x['timestamp'], reverse=True)
+            # Fallback to string sort if detailed parsing fails
+            history.sort(key=lambda x: str(x['timestamp']), reverse=True)
     
     return render_template('results.html', package=package, history=history)
-
-@app.route('/quote')
-def quote_page():
-    return render_template('quote.html')
-
-@app.route('/ship_now')
-def ship_now_page():
-    return render_template('ship_now.html')
 
 
 # --- MOVEXA Admin Routes (AUTH REQUIRED) ---
