@@ -31,19 +31,19 @@ def index():
     # 1. FIX: Correct indentation for function body
     return render_template('index.html')
 
-@app.route('/track', methods=['POST']) # 2. FIX: Correct route syntax
+@app.route('/track', methods=['POST'])
 def track_shipment():
-    # This route handles the submission of
-    # the tracking ID from the homepage form.
-    # 1. Get the tracking ID from the
-    submitted_form_data_tracking_id = request.form.get('tracking_id')
-    # 2. For now, return dummy data to
-    # ensure the page loads:
-    return render_template('results.html',
-                           tracking_id=submitted_form_data_tracking_id,
-                           status="In progress",
-                           location="New York, USA")
-
+    # 1. Get the tracking ID from the submitted form data, ensure it's uppercase
+    tracking_id = request.form.get('tracking_id', '').upper()
+    
+    # 2. Redirect to the results route, which handles the data fetching and rendering
+    if tracking_id:
+        # Use url_for to redirect to the 'results' function, passing the ID as a path argument
+        return redirect(url_for('results', tracking_id=tracking_id))
+    else:
+        # If no ID is provided (shouldn't happen with HTML 'required'), go home
+        return redirect(url_for('index'))
+        
 @app.route('/ship_now')
 def ship_now_page():
     # Renamed the endpoint to clearly define it as a page
