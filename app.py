@@ -19,8 +19,6 @@ except ImportError:
     DATABASE_FILE = 'tracking.db'
     USE_POSTGRES = False
 # --- END RENDER/POSTGRESQL SPECIFIC IMPORTS ---
-
-
 app = Flask(__name__)
 CORS(app) 
 # --- START OF CODE TO ADD ---
@@ -32,9 +30,6 @@ def ship_now():
 def get_quote():
     return render_template('quote.html')
 
-@app.route('/business')
-def business_page():
-    return render_template('business.html')
 
 @app.route('/contact')
 def contact_page():
