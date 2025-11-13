@@ -22,8 +22,8 @@ except ImportError:
 app = Flask(__name__)
 CORS(app) 
 @app. route ('/')
-def index():
-return render_template( 'index.html')
+ def index():
+     return render_template('index.html')
 @app. route ('/track', methods= [ 'POST' ] )
 def track_shipment () :
 # This route handles the submission of
@@ -33,10 +33,10 @@ submitted form data tracking_id =
 request. form.get ( 'tracking_id')
 # 2. For now, return dummy data to
 ensure the page loads:
-return render_template( 'results.html',
-tracking_id=tracking_id,
- status="In progress",
- location="New York, USA")
+ return render_template('results.html',
+                       tracking_id=tracking_id,
+                       status="In progress",  # <-- String must be closed
+                       location="New York, USA")
 Capp. route('/ship-now')
 def ship_now() :
 return
