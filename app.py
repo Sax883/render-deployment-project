@@ -24,11 +24,6 @@ except ImportError:
 app = Flask(__name__)
 CORS(app) 
 # --- START OF CODE TO ADD ---
-@app.route('/')
-def index():
-    # Renders the main HTML file.
-    return render_template('index.html')
-# --- END OF CODE TO ADD ---
 @app.route('/ship-now')
 def ship_now():
     return render_template('ship_now.html')
@@ -43,8 +38,18 @@ def business_page():
 
 @app.route('/contact')
 def contact_page():
-    # Please confirm the exact name of your contact/map HTML file here
+    # Please ensure you have a file named 'contact.html' in your templates folder!
     return render_template('contact.html')
+
+@app.route('/about') # Added for 'About Us' link
+def about_page():
+    # Please ensure you have a file named 'about.html' in your templates folder!
+    return render_template('about.html')
+
+@app.route('/client-portal') # Added for 'Client Portal' link
+def client_portal():
+    # Please ensure you have a file named 'client_portal.html' in your templates folder!
+    return render_template('client_portal.html')
 # --- SECURITY CONFIGURATION (Basic Authentication) ---
 # NOTE: Render will use environment variables for security. 
 ADMIN_USERNAME = os.environ.get('ADMIN_USERNAME', 'movexa_admin')
