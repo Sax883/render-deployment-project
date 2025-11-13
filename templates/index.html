@@ -21,22 +21,6 @@
         // --- Utility Functions ---
 // ... (code up to line 21 in your screenshot)
 
-// --- Mobile Menu Toggle Script ---
-document.addEventListener('DOMContentLoaded', () => {
-    const menuButton = document.getElementById('menu-button');
-    const mobileMenu = document.getElementById('mobile-menu');
-
-    if (menuButton && mobileMenu) {
-        menuButton.addEventListener('click', () => {
-            // Toggles the 'hidden' class, showing/hiding the menu
-            mobileMenu.classList.toggle('hidden');
-            // Ensures the menu stacks vertically
-            mobileMenu.classList.toggle('flex'); 
-        });
-    }
-});
-// --- End Mobile Menu Toggle Script ---
-
 // ... (Rest of your utility functions and the window.onload logic follow this)
         /**
          * Displays a custom modal message box (replaces forbidden alert())
@@ -82,7 +66,15 @@ document.addEventListener('DOMContentLoaded', () => {
                 const app = initializeApp(firebaseConfig);
                 getFirestore(app);
                 auth = getAuth(app);
+const menuButton = document.getElementById('menu-button');
+const mobileMenu = document.getElementById('mobile-menu');
 
+if (menuButton && mobileMenu) {
+    menuButton.addEventListener('click', () => {
+        mobileMenu.classList.toggle('hidden');
+        mobileMenu.classList.toggle('flex'); 
+    });
+}
                 // Perform secure platform sign-in silently on load (for Client Portal link)
                 onAuthStateChanged(auth, async (user) => {
                     if (!user) {
