@@ -169,6 +169,7 @@ if (menuButton && mobileMenu) {
         </div>
     </div>
     <header class="bg-blue-800 shadow-xl">
+    <header class="bg-blue-800 shadow-xl">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex justify-between items-center h-16">
         <!-- Logo Link -->
         <a href="{{ url_for('index') }}" class="text-3xl font-extrabold text-yellow-400 tracking-wider">MOVEXA</a>
@@ -182,11 +183,11 @@ if (menuButton && mobileMenu) {
             <a href="{{ url_for('client_portal') }}" class="hover:text-yellow-400 transition">Help</a>
         </nav>
         
-        <!-- Mobile Menu Button -->
+        <!-- Mobile Menu Button (CRUCIAL ID) -->
         <button id="menu-button" class="sm:hidden text-white text-2xl">☰</button>
     </div>
     
-    <!-- Mobile Menu Content (Initially hidden) -->
+    <!-- Mobile Menu Content (CRUCIAL ID and HIDDEN by default) -->
     <div id="mobile-menu" class="hidden sm:hidden flex-col bg-blue-900 p-4 w-full">
         <a href="{{ url_for('index') }}" class="text-white hover:text-yellow-400 py-2 border-b border-blue-800">Tracking</a>
         <a href="{{ url_for('about_page') }}" class="text-white hover:text-yellow-400 py-2 border-b border-blue-800">About Us</a>
