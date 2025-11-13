@@ -6,20 +6,21 @@ from datetime import datetime
 # Render sets this environment variable automatically
 DATABASE_URL = os.environ.get("DATABASE_URL")
 
-if not DATABASE_URL:
-    print("CRITICAL: DATABASE_URL environment variable not set. Cannot run setup.")
-    # For local testing, ensure you set this variable yourself if using local PostgreSQL
-    exit(1)
+# --- DATABASE SETUP ---
 
 def setup_database_psql():
     """Initializes the PostgreSQL database and creates the necessary tables."""
     conn = None
+    if not DATABASE_URL:
+        print("CRITICAL: DATABASE_URL not set. Skipping PostgreSQL setup.")
+        return
+
     try:
         # Connect to the PostgreSQL database
         conn = psycopg2.connect(DATABASE_URL)
         cursor = conn.cursor()
 
-        # SQL to create the packages table (UPDATED for PostgreSQL)
+        # SQL to create the packages table
         cursor.execute("""
             CREATE TABLE IF NOT EXISTS packages (
                 tracking_id VARCHAR(255) PRIMARY KEY,
@@ -29,7 +30,8 @@ def setup_database_psql():
                 
                 weight REAL,
                 dimensions VARCHAR(255),
-                shipment_type VARCHAR(255)
+                shipment_type VARCHAR(255),
+                location VARCHAR(255)
             );
         """)
 
@@ -53,14 +55,14 @@ def setup_database_psql():
         if cursor.fetchone() is None:
             cursor.execute("""
                 INSERT INTO packages 
-                (tracking_id, recipient, status, created_at, weight, dimensions, shipment_type) 
-                VALUES (%s, %s, %s, %s, %s, %s, %s)
-            """, (sample_id, 'Render Test Customer', 'Shipment Created', created_at, 1.2, '10cm x 10cm x 10cm', 'Document'))
+                (tracking_id, recipient, status, created_at, weight, dimensions, shipment_type, location) 
+                VALUES (%s, %s, %s, %s, %s, %s, %s, %s)
+            """, (sample_id, 'Render Test Customer', 'Shipment Created', created_at, 1.2, '10cm x 10cm x 10cm', 'Document', 'Live Render Hub'))
             
             cursor.execute("""
                 INSERT INTO history (tracking_id, timestamp, location, status_update) 
                 VALUES (%s, %s, %s, %s)
-            """, (sample_id, created_at, 'Live Render Environment', 'Shipment Created'))
+            """, (sample_id, created_at, 'Live Render Hub', 'Shipment Created'))
             print(f"Sample package {sample_id} added.")
 
         conn.commit()
@@ -70,10 +72,4 @@ def setup_database_psql():
 
     except Exception as e:
         print(f"PostgreSQL Setup Error: {e}")
-        # In deployment, raise the error to halt the process if critical setup fails
-        if 'psycopg2' in str(e):
-             print("\n!!! CRITICAL HINT: Ensure 'psycopg2-binary' is in requirements.txt !!!\n")
         raise e
-
-if __name__ == '__main__':
-    setup_database_psql()
