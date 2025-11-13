@@ -186,7 +186,7 @@
             <div class="bg-white rounded-xl card-shadow p-6 sm:p-10">
                 <h1 class="text-3xl sm:text-4xl font-extrabold text-blue-800 mb-6">Track Your MOVEXA Shipment</h1>
                 
-                <form method="POST" action="http://127.0.0.1:5000/track" class="flex flex-col sm:flex-row space-y-4 sm:space-y-0 sm:space-x-4 mb-10">
+                <form method="POST" action="{{ url_for('track_shipment') }}" class="flex flex-col sm:flex-row space-y-4 sm:space-y-0 sm:space-x-4 mb-10">
                     <input type="text" name="tracking_id" placeholder="Enter Tracking ID (e.g., MVX-0C122EB4)" required
                            class="flex-grow p-3 border-2 border-blue-300 rounded-xl focus:ring-blue-500 focus:border-blue-500 text-lg uppercase shadow-inner">
                     <button type="submit" class="bg-yellow-500 text-blue-800 font-bold py-3 px-8 rounded-xl hover:bg-yellow-400 transition shadow-lg transform hover:scale-[1.01]">
