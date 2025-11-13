@@ -29,7 +29,22 @@ def index():
     # Renders the main HTML file.
     return render_template('index.html')
 # --- END OF CODE TO ADD ---
+@app.route('/ship-now')
+def ship_now():
+    return render_template('ship_now.html')
 
+@app.route('/get-quote')
+def get_quote():
+    return render_template('quote.html')
+
+@app.route('/business')
+def business_page():
+    return render_template('business.html')
+
+@app.route('/contact')
+def contact_page():
+    # Please confirm the exact name of your contact/map HTML file here
+    return render_template('contact.html')
 # --- SECURITY CONFIGURATION (Basic Authentication) ---
 # NOTE: Render will use environment variables for security. 
 ADMIN_USERNAME = os.environ.get('ADMIN_USERNAME', 'movexa_admin')
