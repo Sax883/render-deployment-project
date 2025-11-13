@@ -35,7 +35,8 @@ request. form.get ( 'tracking_id')
 # 2. For now, return dummy data to
 ensure the page loads:
 return render_template( 'results.html',
-tracking_id=tracking_id, status="In progress, location="New York, USA")
+tracking_id=tracking_id, status="In progress",
+ location="New York, USA")
 Capp. route('/ship-now')
 def ship_now() :
 return
