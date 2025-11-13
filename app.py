@@ -22,6 +22,26 @@ except ImportError:
 app = Flask(__name__)
 CORS(app) 
 # --- START OF CODE TO ADD ---
+@app.route('/')
+def index():
+    # Fixes the 404 on the root domain and serves the styled homepage.
+    return render_template('index.html')
+
+@app.route('/track', methods=['POST'])
+def track_shipment():
+    # This handles the tracking form submission from the homepage.
+    from flask import request
+    
+    # 1. Get the tracking ID from the submitted form data
+    tracking_id = request.form.get('tracking_id')
+
+    # 2. *** Your code to query the database using tracking_id goes here ***
+    # This is where the status/history data is fetched.
+
+    # 3. Renders the results page with placeholder data for testing:
+    return render_template('results.html', package_id=tracking_id)
+
+# --- NAVIGATION LINKS ---
 @app.route('/ship-now')
 def ship_now():
     return render_template('ship_now.html')
@@ -30,20 +50,23 @@ def ship_now():
 def get_quote():
     return render_template('quote.html')
 
+@app.route('/business')
+def business_page():
+    return render_template('business.html')
 
 @app.route('/contact')
 def contact_page():
-    # Please ensure you have a file named 'contact.html' in your templates folder!
+    # Assuming your contact/map file is contact.html
     return render_template('contact.html')
 
-@app.route('/about') # Added for 'About Us' link
+@app.route('/about') 
 def about_page():
-    # Please ensure you have a file named 'about.html' in your templates folder!
+    # Assuming your 'About Us' file is about.html
     return render_template('about.html')
 
-@app.route('/client-portal') # Added for 'Client Portal' link
+@app.route('/client-portal') 
 def client_portal():
-    # Please ensure you have a file named 'client_portal.html' in your templates folder!
+    # Assuming your 'Client Portal/Help' file is client_portal.html
     return render_template('client_portal.html')
 # --- SECURITY CONFIGURATION (Basic Authentication) ---
 # NOTE: Render will use environment variables for security. 
