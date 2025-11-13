@@ -21,52 +21,43 @@ except ImportError:
 # --- END RENDER/POSTGRESQL SPECIFIC IMPORTS ---
 app = Flask(__name__)
 CORS(app) 
-# --- START OF CODE TO ADD ---
-# This code is clean and should resolve all known AssertionErrors and SyntaxErrors.
-
-@app.route('/')
+@app. route ('/')
 def index():
-    # Renders the styled homepage file
-    return render_template('index.html')
-
-@app.route('/track', methods=['POST'])
-def track_shipment():
-    # This route handles the submission of the tracking ID from the homepage form.
-    from flask import request # Ensures 'request' is accessible if not imported globally
-    
-    # 1. Get the tracking ID from the submitted form data
-    tracking_id = request.form.get('tracking_id')
-
-    # 2. *** YOUR DATABASE/TRACKING CODE GOES HERE ***
-    # For now, it returns dummy data to ensure the page loads:
-    
-    # 3. Render the results page (Tracking Dashboard)
-    return render_template('results.html', tracking_id=tracking_id, status="In Transit", location="New York, USA")
-
-@app.route('/ship-now')
-def ship_now():
-    return render_template('ship_now.html')
-
-@app.route('/get-quote')
-def get_quote():
-    return render_template('quote.html')
-
-@app.route('/business')
-def business_page():
-    return render_template('business.html')
-
-@app.route('/contact')
-def contact_page():
-    return render_template('contact.html')
-
-@app.route('/about')
-def about_page():
-    return render_template('about.html')
-
-@app.route('/client-portal')
-def client_portal_page():
-    return render_template('client_portal.html')
-
+return render_template( 'index.html')
+@app. route ('/track')
+, methods= [ 'POST' ]
+def track_shipment () :
+# This route handles the submission of
+the tracking ID from the homepage form. from flask import request
+# 1. Get the tracking ID from the
+submitted form data tracking_id =
+request. form.get ( 'tracking_id')
+# 2. For now, return dummy data to
+ensure the page loads:
+return render_template( 'results.html',
+tracking_id=tracking_id, status="In
+, location="New York, USA")
+Capp. route('/ship-now')
+def ship_now() :
+return
+render_ template ('ship_now.html')
+Capp. route ('/get-quote')
+def get quote() :
+return render_template ( 'quote.html' )
+@app. route ('/business')
+def business_page ():
+return
+render_template ( 'business.html ')
+@app. route('/contact')
+def contact page ():
+return render_template ( 'contact.html')
+@app. route ('/about')
+def about_page() :
+return render_template ( 'about.html')
+@app. route ('/client-portal') 
+def client_portal_page ():
+return
+render_template ('client_portal.html')
 # --- SECURITY CONFIGURATION (Basic Authentication) ---
 # NOTE: Render will use environment variables for security. 
 ADMIN_USERNAME = os.environ.get('ADMIN_USERNAME', 'movexa_admin')
