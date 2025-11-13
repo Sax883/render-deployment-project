@@ -274,10 +274,6 @@ def quote_page():
 def ship_now_page():
     return render_template('ship_now.html')
 
-@app.route('/business')
-def business_page():
-    return render_template('business.html')
-
 
 # --- MOVEXA Admin Routes (AUTH REQUIRED) ---
 
