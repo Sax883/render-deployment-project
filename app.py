@@ -67,17 +67,7 @@ def about_page():
 def client_portal():
     # Assuming your Client Portal/Help file is client_portal.html
     return render_template('client_portal.html')
-
-Final Deployment Commands
- * Replace the existing route code block in your local app.py and save the file.
- * Stage the change:
-   git add app.py
-
- * Commit the fix:
-   git commit -m "FINAL CODE FIX: Added missing /track POST route to resolve all 404 errors"
-
- * Push the final fix:
-   git push origin main
+    
 # --- SECURITY CONFIGURATION (Basic Authentication) ---
 # NOTE: Render will use environment variables for security. 
 ADMIN_USERNAME = os.environ.get('ADMIN_USERNAME', 'movexa_admin')
