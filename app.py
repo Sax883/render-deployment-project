@@ -67,7 +67,7 @@ def about_page():
     return render_template('about.html')
 
 @app.route('/client-portal') 
-def client_portal_page():
+def client_portal():
     return render_template('client_portal.html')
 
 # --- PUBLIC ROUTING FIXES END HERE ---
