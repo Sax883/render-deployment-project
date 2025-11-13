@@ -79,10 +79,10 @@
                     <p id="quoteValue" class="text-4xl font-extrabold text-blue-800">$0.00 USD</p>
                 </div>
                 <p id="quoteMessage" class="text-sm text-gray-500 mt-2"></p>
-                <a href="http://127.0.0.1:5000/ship_now"
-                        class="mt-4 inline-block bg-yellow-500 text-blue-800 font-bold py-2 px-6 rounded-lg hover:bg-yellow-400 transition shadow-md">
-                    Proceed to Booking
-                </a>
+                <a href="{{ url_for('ship_now_page') }}" 
+   class="mt-4 inline-block bg-yellow-500 text-blue-800 font-bold py-3 px-6 rounded-lg hover:bg-yellow-400 transition transform hover:scale-[1.01] shadow-lg">
+    Proceed to Booking
+</a>
             </div>
             
             <div id="error" class="mt-8 p-4 bg-red-100 border-l-4 border-red-500 text-red-700 rounded-lg hidden">
