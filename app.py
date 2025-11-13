@@ -24,7 +24,7 @@ CORS(app)
 @app. route ('/')
 def index():
 return render_template( 'index.html')
-@app. route ('/track', methods= [ 'POST' ])
+@app. route ('/track', methods= [ 'POST' ] )
 def track_shipment () :
 # This route handles the submission of
 the tracking ID from the homepage form. from flask import request
