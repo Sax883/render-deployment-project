@@ -207,6 +207,7 @@
             
             <div class="space-y-6">
                 
+                <!-- 1. Ship Now Link -->
                 <a href="{{ url_for('ship_now') }}" class="service-card bg-white p-6 rounded-xl shadow-lg flex items-center hover:shadow-xl transition duration-300">
                     <div class="icon-box text-blue-800 text-2xl mr-4">
                         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-calendar-check"><path d="M8 2v4"/><path d="M16 2v4"/><rect width="18" height="18" x="3" y="4" rx="2"/><path d="M3 10h18"/><path d="m9 16 2 2 4-4"/></svg>
@@ -217,7 +218,8 @@
                     </div>
                 </a>
 
-                <a href="{{ url_for('get_qoute') }}" class="service-card bg-white p-6 rounded-xl shadow-lg flex items-center hover:shadow-xl transition duration-300">
+                <!-- 2. Get a Quote Link -->
+                <a href="{{ url_for('get_quote') }}" class="service-card bg-white p-6 rounded-xl shadow-lg flex items-center hover:shadow-xl transition duration-300">
                     <div class="icon-box text-blue-800 text-2xl mr-4">
                         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-calculator"><rect width="16" height="20" x="4" y="2" rx="2"/><line x1="8" x2="16" y1="6" y2="6"/><line x1="16" x2="16" y1="18" y2="18"/><line x1="8" x2="8" y1="14" y2="14"/><line x1="12" x2="12" y1="18" y2="18"/><line x1="12" x2="12" y1="14" y2="14"/><line x1="8" x2="16" y1="10" y2="10"/><line x1="8" x2="8" y1="18" y2="18"/></svg>
                     </div>
@@ -227,6 +229,7 @@
                     </div>
                 </a>
 
+                <!-- 3. MOVEXA for Business Link -->
                 <a href="{{ url_for('business_page') }}" class="service-card bg-white p-6 rounded-xl shadow-lg flex items-center hover:shadow-xl transition duration-300">
                     <div class="icon-box text-blue-800 text-2xl mr-4">
                         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-briefcase"><rect width="20" height="14" x="2" y="7" rx="2" ry="2"/><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/></svg>
@@ -295,7 +298,7 @@
                     </div>
                     <div class="faq-content">
                         <p class="text-gray-600 pt-3">
-                            Tracking events usually appear *24-48 hours* after receiving the Track and Trace ID. In general, once the shipment has reached our facility, a tracking event will appear.
+                            Tracking events usually appear 24-48 hours after receiving the Track and Trace ID. In general, once the shipment has reached our facility, a tracking event will appear.
                         </p>
                     </div>
                 </div>
@@ -307,7 +310,7 @@
                     </div>
                     <div class="faq-content">
                         <p class="text-gray-600 pt-3">
-                            Please make sure you entered the correct tracking number in the correct format: Check for minimum length of *5 characters*, and if there are any special characters in your input. Tab, comma, space and semicolon are understood as separators between several tracking IDs.
+                            Please make sure you entered the correct tracking number in the correct format: Check for minimum length of 5 characters, and if there are any special characters in your input. Tab, comma, space and semicolon are understood as separators between several tracking IDs.
                         </p>
                         <p class="text-gray-600 pt-3">
                             If your tracking ID is not working, please contact your shipper or online shop.
