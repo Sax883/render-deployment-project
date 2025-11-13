@@ -22,6 +22,8 @@ except ImportError:
 app = Flask(__name__)
 CORS(app) 
 # --- START OF CODE TO ADD ---
+# This code is clean and should resolve all known AssertionErrors and SyntaxErrors.
+
 @app.route('/')
 def index():
     # Renders the styled homepage file
@@ -30,15 +32,15 @@ def index():
 @app.route('/track', methods=['POST'])
 def track_shipment():
     # This route handles the submission of the tracking ID from the homepage form.
-
+    from flask import request # Ensures 'request' is accessible if not imported globally
+    
     # 1. Get the tracking ID from the submitted form data
     tracking_id = request.form.get('tracking_id')
 
     # 2. *** YOUR DATABASE/TRACKING CODE GOES HERE ***
-    # This code assumes your DB query is successful and returns results.
+    # For now, it returns dummy data to ensure the page loads:
     
     # 3. Render the results page (Tracking Dashboard)
-    # Note: Replace 'In Transit' and 'New York' with actual data fetched from your DB
     return render_template('results.html', tracking_id=tracking_id, status="In Transit", location="New York, USA")
 
 @app.route('/ship-now')
@@ -55,19 +57,16 @@ def business_page():
 
 @app.route('/contact')
 def contact_page():
-    # Assuming your contact/map file is contact.html
     return render_template('contact.html')
 
 @app.route('/about')
 def about_page():
-    # Assuming your 'About Us' file is about.html
     return render_template('about.html')
 
 @app.route('/client-portal')
-def client_portal():
-    # Assuming your Client Portal/Help file is client_portal.html
+def client_portal_page():
     return render_template('client_portal.html')
-    
+
 # --- SECURITY CONFIGURATION (Basic Authentication) ---
 # NOTE: Render will use environment variables for security. 
 ADMIN_USERNAME = os.environ.get('ADMIN_USERNAME', 'movexa_admin')
