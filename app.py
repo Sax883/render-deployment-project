@@ -251,10 +251,6 @@ def api_quote():
 
 # --- MOVEXA Customer-Facing Routes (No Auth Required) ---
 
-@app.route('/track', methods=['POST'])
-def track_shipment():
-    tracking_id = request.form.get('tracking_id', '').strip().upper()
-    return redirect(url_for('results', tracking_id=tracking_id))
 
 @app.route('/results/<tracking_id>')
 def results(tracking_id):
