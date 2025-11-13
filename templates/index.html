@@ -19,7 +19,25 @@
         setLogLevel('Debug');
 
         // --- Utility Functions ---
+// ... (code up to line 21 in your screenshot)
 
+// --- Mobile Menu Toggle Script ---
+document.addEventListener('DOMContentLoaded', () => {
+    const menuButton = document.getElementById('menu-button');
+    const mobileMenu = document.getElementById('mobile-menu');
+
+    if (menuButton && mobileMenu) {
+        menuButton.addEventListener('click', () => {
+            // Toggles the 'hidden' class, showing/hiding the menu
+            mobileMenu.classList.toggle('hidden');
+            // Ensures the menu stacks vertically
+            mobileMenu.classList.toggle('flex'); 
+        });
+    }
+});
+// --- End Mobile Menu Toggle Script ---
+
+// ... (Rest of your utility functions and the window.onload logic follow this)
         /**
          * Displays a custom modal message box (replaces forbidden alert())
          * @param {string} message - The message to display.
@@ -159,27 +177,32 @@
         </div>
     </div>
     <header class="bg-blue-800 shadow-xl">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex justify-between items-center h-16">
-            <a href="#tracking" class="text-3xl font-extrabold text-yellow-400 tracking-wider">MOVEXA</a>
-           <nav class="hidden sm:flex flex-space-x-6 text-white text-sm font-medium items-center">
-    <!-- 1. Tracking: Links to the homepage route, which includes the tracking form -->
-    <a href="{{ url_for('index') }}" class="hover:text-yellow-400 transition">Tracking</a>
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex justify-between items-center h-16">
+        <!-- Logo Link -->
+        <a href="{{ url_for('index') }}" class="text-3xl font-extrabold text-yellow-400 tracking-wider">MOVEXA</a>
+        
+        <!-- Desktop Nav (Hidden on Mobile) -->
+        <nav class="hidden sm:flex space-x-6 text-white text-sm font-medium items-center">
+            <a href="{{ url_for('index') }}" class="hover:text-yellow-400 transition">Tracking</a>
+            <a href="{{ url_for('about_page') }}" class="hover:text-yellow-400 transition">About Us</a>
+            <a href="{{ url_for('contact_page') }}" class="hover:text-yellow-400 transition">Contact & Map</a>
+            <a href="{{ url_for('client_portal') }}" class="hover:text-yellow-400 transition">Client Portal</a>
+            <a href="{{ url_for('client_portal') }}" class="hover:text-yellow-400 transition">Help</a>
+        </nav>
+        
+        <!-- Mobile Menu Button -->
+        <button id="menu-button" class="sm:hidden text-white text-2xl">☰</button>
+    </div>
     
-    <!-- 2. About Us: Links to the dedicated About page -->
-    <a href="{{ url_for('about_page') }}" class="hover:text-yellow-400 transition">About Us</a>
-    
-    <!-- 3. Contact & Map: Links to the dedicated Contact page -->
-    <a href="{{ url_for('contact_page') }}" class="hover:text-yellow-400 transition">Contact & Map</a>
-    
-    <!-- 4. Client Portal/Help: Links to the Client Portal/Help page -->
-    <a href="{{ url_for('client_portal') }}" class="hover:text-yellow-400 transition">Client Portal</a>
-    
-    <!-- Your original help button was complex, linking it to the portal is safest -->
-    <a href="{{ url_for('client_portal') }}" class="hover:text-yellow-400 transition">Help</a>
-</nav>
-            <button class="sm:hidden text-white text-2xl">☰</button>
-        </div>
-    </header>
+    <!-- Mobile Menu Content (Initially hidden) -->
+    <div id="mobile-menu" class="hidden sm:hidden flex-col bg-blue-900 p-4 w-full">
+        <a href="{{ url_for('index') }}" class="text-white hover:text-yellow-400 py-2 border-b border-blue-800">Tracking</a>
+        <a href="{{ url_for('about_page') }}" class="text-white hover:text-yellow-400 py-2 border-b border-blue-800">About Us</a>
+        <a href="{{ url_for('contact_page') }}" class="text-white hover:text-yellow-400 py-2 border-b border-blue-800">Contact & Map</a>
+        <a href="{{ url_for('client_portal') }}" class="text-white hover:text-yellow-400 py-2 border-b border-blue-800">Client Portal</a>
+        <a href="{{ url_for('client_portal') }}" class="text-white hover:text-yellow-400 py-2">Help</a>
+    </div>
+</header>
 
     <section id="tracking" class="py-16 sm:py-24 bg-cover bg-center" style="background-image: url('https://placehold.co/1200x600/1e3a8a/93c5fd?text=GLOBAL+LOGISTICS');">
         <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
